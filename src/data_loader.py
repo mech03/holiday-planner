@@ -64,7 +64,7 @@ def load_weather() -> pd.DataFrame:
 def load_places() -> pd.DataFrame:
     """Return the nearby-places table with a tidy price label."""
     df = pd.read_csv(_path("places.csv"))
-    df["price_label"] = df["price_level"].map(PRICE_LEVEL_MAP).fillna("—")
+    df["price_label"] = df["price_level"].map(PRICE_LEVEL_MAP).fillna("N/A")
     df["category"] = df["place_type_searched"].map(PLACE_TYPE_LABELS).fillna(df["place_type_searched"])
     return df
 

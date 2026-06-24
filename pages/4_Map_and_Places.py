@@ -1,14 +1,12 @@
-"""Map & Places page — interactive map + amenity heatmap.
-
-Reads ``places.csv`` (nearby restaurants, bars, clubs, attractions, places to stay) and
-plots them on a folium map with a density heatmap, plus a filterable top-rated list.
-"""
+"""Map & Places page — interactive map and amenity heatmap."""
 from __future__ import annotations
 import streamlit as st
 
 from src.data_loader import load_places, load_recommendations, PLACE_TYPE_LABELS
+from src.ui import apply_styles
 
-st.set_page_config(page_title="Map & Places · Holiday Planner", page_icon="🗺️", layout="wide")
+st.set_page_config(page_title="Map & Places · Holiday Planner", layout="wide")
+apply_styles()
 
 CATEGORY_COLOURS = {
     "Restaurants": "red", "Bars": "purple", "Night clubs": "darkblue",
@@ -27,8 +25,10 @@ def _rec():
 
 
 places, rec = _places(), _rec()
-st.title("🗺️ Map & places")
-st.write("Explore the nightlife, food and attractions around each destination.")
+st.title("Map and Places")
+st.write("Explore the nightlife, food and attractions around each destination. Use the filters to focus on what you are looking for.")
+
+st.divider()
 
 # ---- filters ----
 dest = st.selectbox("Destination", sorted(places["destination"].unique()))
@@ -52,8 +52,10 @@ if not row.empty:
     m4.metric("Attractions", int(r["attractions_count"]))
 
 if f.empty:
-    st.warning("No places match the filters — lower the minimum rating or add categories.")
+    st.warning("No places match the filters. Lower the minimum rating or add more categories.")
     st.stop()
+
+st.divider()
 
 # ---- map ----
 try:
@@ -68,7 +70,7 @@ try:
     for p in f.itertuples():
         colour = CATEGORY_COLOURS.get(p.category, "gray")
         popup = (f"<b>{p.place_name}</b><br>{p.category} · {p.price_label}"
-                 f"<br>★ {p.rating} ({int(p.user_rating_count) if p.user_rating_count==p.user_rating_count else 0})"
+                 f"<br>Rated {p.rating} ({int(p.user_rating_count) if p.user_rating_count==p.user_rating_count else 0} reviews)"
                  f"<br><a href='{p.google_maps_url}' target='_blank'>Open in Google Maps</a>")
         folium.CircleMarker([p.latitude, p.longitude], radius=5, color=colour, fill=True,
                             fill_opacity=0.85, popup=folium.Popup(popup, max_width=260),
@@ -78,13 +80,16 @@ except Exception:
     st.map(f.rename(columns={"latitude": "lat", "longitude": "lon"})[["lat", "lon"]])
 
 # ---- legend + top-rated list ----
-st.caption("Marker colours — " + " · ".join(f"{k}: {v}" for k, v in CATEGORY_COLOURS.items()))
+st.caption("Marker colours: " + ", ".join(f"{k} ({v})" for k, v in CATEGORY_COLOURS.items()))
+
+st.divider()
+
 st.subheader("Top-rated places")
 top = (f.sort_values(["rating", "user_rating_count"], ascending=False)
          .head(15)[["place_name", "category", "price_label", "rating",
                     "user_rating_count", "google_maps_url"]]
          .rename(columns={"place_name": "Place", "category": "Type", "price_label": "Price",
-                          "rating": "★", "user_rating_count": "Reviews",
+                          "rating": "Rating", "user_rating_count": "Reviews",
                           "google_maps_url": "Map link"}))
 st.dataframe(top, use_container_width=True, hide_index=True,
-             column_config={"Map link": st.column_config.LinkColumn("Map link", display_text="Open ↗")})
+             column_config={"Map link": st.column_config.LinkColumn("Map link", display_text="Open")})

@@ -1,14 +1,12 @@
-"""Weather page — filter destinations and view forecast graphs.
-
-Reads the daily forecast (``weather.csv``) and renders temperature, humidity, cloud and
-wind graphs across the forecast window, plus a summary table.
-"""
+"""Weather page — filter destinations and view forecast graphs."""
 from __future__ import annotations
 import streamlit as st
 
 from src.data_loader import load_weather
+from src.ui import apply_styles
 
-st.set_page_config(page_title="Weather · Holiday Planner", page_icon="🌦", layout="wide")
+st.set_page_config(page_title="Weather · Holiday Planner", layout="wide")
+apply_styles()
 
 
 @st.cache_data
@@ -17,8 +15,10 @@ def _weather():
 
 
 wx = _weather()
-st.title("🌦 Weather forecast")
-st.write("Compare the forecast across destinations over the trip window.")
+st.title("Weather Forecast")
+st.write("Compare conditions across destinations over the trip window. Filter by destination and date to narrow your focus.")
+
+st.divider()
 
 # ---- filters ----
 all_dest = sorted(wx["destination"].unique())
@@ -31,7 +31,7 @@ f = wx[wx["destination"].isin(chosen)
        & (wx["forecast_date"].dt.date <= date_range[1])]
 
 if f.empty:
-    st.warning("No data for the current selection — pick at least one destination.")
+    st.warning("No data for the current selection. Pick at least one destination.")
     st.stop()
 
 
@@ -39,13 +39,15 @@ def _pivot(col):
     return f.pivot_table(index="forecast_date", columns="destination", values=col)
 
 
+st.divider()
+
 # ---- graphs ----
-st.subheader("🌡 Maximum temperature (°C)")
+st.subheader("Maximum temperature (C)")
 st.line_chart(_pivot("forecast_max_temp_c"))
 
 c1, c2 = st.columns(2)
 with c1:
-    st.subheader("Average temperature (°C)")
+    st.subheader("Average temperature (C)")
     st.line_chart(_pivot("forecast_avg_temp_c"))
     st.subheader("Humidity (%)")
     st.line_chart(_pivot("forecast_avg_humidity_pct"))
@@ -54,6 +56,8 @@ with c2:
     st.line_chart(_pivot("forecast_avg_cloudiness_pct"))
     st.subheader("Wind speed (m/s)")
     st.line_chart(_pivot("forecast_avg_wind_speed_mps"))
+
+st.divider()
 
 # ---- summary ----
 st.subheader("Summary over the selected window")
@@ -66,5 +70,7 @@ summary = (f.groupby("destination")
              .round(1).sort_values("avg_max_temp", ascending=False))
 st.dataframe(summary, use_container_width=True)
 warmest = summary.index[0]
-st.info(f"☀️ Warmest in this window: **{warmest}** "
-        f"({summary.loc[warmest, 'avg_max_temp']:.0f}°C average max).")
+st.info(
+    f"Warmest in this window: **{warmest}** "
+    f"({summary.loc[warmest, 'avg_max_temp']:.0f} C average max)."
+)
