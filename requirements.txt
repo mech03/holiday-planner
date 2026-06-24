@@ -1,0 +1,17 @@
+# --- core runtime ---
+streamlit>=1.30
+pandas>=2.0
+numpy>=1.24
+requests>=2.31
+folium>=0.15
+streamlit-folium>=0.18
+matplotlib>=3.7
+beautifulsoup4>=4.12
+lxml>=4.9
+python-dotenv>=1.0
+# --- optional: live LLM blurb ---
+anthropic>=0.30
+# --- dev / testing ---
+pytest>=7.4
+jupyter>=1.0
+nbformat>=5.9

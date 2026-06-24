@@ -1,0 +1,13 @@
+city,country,region,lat,lon,avg_flight_gbp,iata
+Cancun,Mexico,Caribbean,21.1619,-86.8515,520,CUN
+Bali (Kuta),Indonesia,Southeast Asia,-8.7215,115.1686,680,DPS
+Phuket,Thailand,Southeast Asia,7.8804,98.3923,640,HKT
+Rio de Janeiro,Brazil,South America,-22.9068,-43.1729,710,GIG
+Punta Cana,Dominican Republic,Caribbean,18.5601,-68.3725,560,PUJ
+Havana,Cuba,Caribbean,23.1136,-82.3666,590,HAV
+Mombasa,Kenya,East Africa,-4.0435,39.6682,620,MBA
+Goa,India,South Asia,15.2993,74.1240,560,GOI
+Montego Bay,Jamaica,Caribbean,18.4762,-77.8939,610,MBJ
+Boracay (Caticlan),Philippines,Southeast Asia,11.9674,121.9248,720,MPH
+Da Nang,Vietnam,Southeast Asia,16.0544,108.2022,690,DAD
+Cartagena,Colombia,South America,10.3910,-75.4794,650,CTG
