@@ -1,52 +1,55 @@
 # 🌴 Holiday Planner — Adventurous Tropical Destination Recommender
 
-> Find an adventurous tropical getaway near the nightlife. Holiday Planner blends live
-> **weather**, **nightlife/amenity** and **cost** signals into a transparent, tunable
-> *Adventure Score*, and presents the options on an interactive **map + heatmap**.
+> A Streamlit web app that helps you pick a warm, lively holiday near the nightlife.
+> It compares destinations on **weather**, **nightlife & amenities** and **cost**, then
+> recommends where to go and where to stay — with graphs, an interactive map and a heatmap.
 
 **Team:** Sam Willock · Amechi Obisesan · Fenner Backhouse
+**This repository (web app & UI):** Amechi Obisesan
 **Module:** Data Scientist Specialisation — Web Scraping & APIs capstone
 
 ---
 
-## ✨ Features
+## ✨ What the app does (pages)
 
-- **Multiple destinations compared** on one transparent 0–100 score.
-- **Google Places API** — nearby night clubs, bars and restaurants.
-- **Google Geocoding API** — resolve user-entered destinations to coordinates.
-- **Open-Meteo weather API** (keyless) — temperature, humidity, cloud, wind.
-- **Web-scraping element** — indicative nightly accommodation prices (`requests` + `BeautifulSoup`).
-- **SQLite caching** — billable API calls cached with a TTL (cost control + "database integration").
-- **LLM-assisted recommendation** — natural-language "why this destination" blurb.
-- **Interactive Streamlit app** — preference sliders, ranked table, bar chart, folium map + heatmap, CSV download.
-- **Fully reproducible** — offline fallbacks mean it runs with zero keys; add keys for live data.
+| Page | What you get |
+|------|--------------|
+| **Welcome** (`app.py`) | Overview, today's top pick, and a map of candidate destinations |
+| **🌦 Weather** | Filter destinations & dates → temperature, humidity, cloud and wind **graphs** |
+| **✈️ Flights & Cost** | Flight price, duration and **trip-cost breakdown** graphs + details table |
+| **🏆 Recommendation** | Set your priorities → best **country** and a recommended **place to stay** |
+| **🗺️ Map & Places** | Interactive **map + heatmap** of restaurants, bars, clubs and attractions |
 
-## 🏗️ Architecture
+## 🧱 How it fits together
+
+This repo is the **web application** layer. It reads the **data team's pipeline outputs**
+(CSV files in `data/`) and turns them into the experience above:
 
 ```
 holiday-planner/
-├── app.py                  # Streamlit app (the live demo)
-├── src/                    # Modular, documented package
-│   ├── config.py           # env-based settings & weights
-│   ├── destinations.py     # candidate catalogue loader
-│   ├── weather.py          # Open-Meteo client (+ fallback)
-│   ├── places.py           # Google Places client (+ fallback)
-│   ├── geocoding.py        # Google Geocoding client (+ fallback)
-│   ├── scraping.py         # web-scraping price element (+ fallback)
-│   ├── database.py         # SQLite cache layer + @cached decorator
-│   ├── scoring.py          # transparent weighted Adventure Score
-│   ├── llm.py              # LLM recommendation blurb (+ fallback)
-│   └── pipeline.py         # one orchestrator used by app AND notebook
-├── notebooks/
-│   └── Holiday_Planner_Analysis.ipynb   # EDA, scoring, findings
-├── data/destinations.csv   # editable seed catalogue
-├── tests/test_scoring.py   # unit tests (pytest)
-├── docs/                   # SoW, team structure, Trello board, plan, conclusions
-├── presentation/           # 5-slide deck
-├── requirements.txt · .env.example · .gitignore · LICENSE
+├── app.py                       # Welcome page (Streamlit entry point)
+├── pages/                       # Streamlit multipage app
+│   ├── 1_Weather.py
+│   ├── 2_Flights_and_Cost.py
+│   ├── 3_Recommendation.py
+│   └── 4_Map_and_Places.py
+├── src/
+│   ├── __init__.py
+│   └── data_loader.py           # loads the CSVs, re-ranks by user preferences
+├── data/                        # data-team pipeline outputs
+│   ├── destination_recommendations.csv   # main table: scores, flights, accommodation, cost
+│   ├── weather.csv                        # daily weather forecast per destination
+│   ├── places.csv                         # nearby places (map / heatmap)
+│   └── destinations.csv                   # current-snapshot (secondary)
+├── tests/test_data_loader.py    # unit tests (pytest)
+├── docs/                        # SoW, team structure, Trello board, project plan
+├── presentation/                # 5-slide deck
+└── requirements.txt · .gitignore · LICENSE · GITHUB_SETUP.md
 ```
 
-The **same `src.pipeline`** powers both the app and the notebook, so analysis and product never drift.
+> **Separation of concerns.** The data team's pipeline (weather, Google Places, flight &
+> accommodation scraping, scoring) produces the CSVs; this app focuses on a clean,
+> insightful UI. To refresh the data, drop new CSVs of the same shape into `data/`.
 
 ## 🚀 Quick start
 
@@ -54,48 +57,28 @@ The **same `src.pipeline`** powers both the app and the notebook, so analysis an
 git clone <your-repo-url> holiday-planner && cd holiday-planner
 python -m venv .venv && source .venv/bin/activate     # Windows: .venv\Scripts\activate
 pip install -r requirements.txt
-
-# optional: enable live data
-cp .env.example .env        # then add your keys
-
 streamlit run app.py
 ```
 
-Open http://localhost:8501. **No keys needed to try it** — it runs on representative
-fallback data and switches to live sources automatically when keys are present.
+Open http://localhost:8501. No API keys are needed to run the app — it reads the CSVs in
+`data/`.
 
 ## ☁️ Deploy (live demo)
 
-Push to GitHub and deploy free on **Streamlit Community Cloud**: point it at `app.py`
-and add `GOOGLE_PLACES_API_KEY` / `LLM_API_KEY` as **Secrets**.
+Push to GitHub (see `GITHUB_SETUP.md`) and deploy free on **Streamlit Community Cloud**:
+point it at `app.py`. Because the app is CSV-driven, the live demo works out of the box.
 
-## 🔑 API keys
+## 🧠 How the recommendation works
 
-| Variable | Used for | Required? |
-|----------|----------|-----------|
-| `GOOGLE_PLACES_API_KEY` | nightlife/amenity counts | optional (fallback) |
-| `GOOGLE_GEOCODING_API_KEY` | resolve custom places | optional (fallback) |
-| `LLM_API_KEY` | recommendation blurb | optional (fallback) |
-
-Keys are read from the environment / `.env`; **nothing secret is committed** (see `.gitignore`).
+The data team provides 0–100 **component scores** (weather, nightlife, amenities, cost).
+The Recommendation page lets you weight what *you* care about and recomputes a transparent
+`user_score`, so the suggested country and place to stay reflect your priorities.
 
 ## 🧪 Tests
 
 ```bash
 pytest -q
 ```
-
-## 🧠 How the score works
-
-`Adventure Score = 100 × Σ(weightᵢ × normalised signalᵢ)` over five signals: temperature
-comfort, low cloud, calm wind, nightlife density and value. Weights are explicit and
-tunable in the sidebar, so every recommendation is **explainable**.
-
-## 📊 Data sources
-
-- Weather: [Open-Meteo](https://open-meteo.com/) (no key)
-- Amenities & geocoding: [Google Maps Platform](https://developers.google.com/maps)
-- Prices: web-scraping stub (`requests` + `BeautifulSoup`)
 
 ## 📄 License
 

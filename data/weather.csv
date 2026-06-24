@@ -1,0 +1,37 @@
+destination,forecast_date,forecast_max_temp_c,forecast_avg_temp_c,forecast_avg_humidity_pct,forecast_avg_cloudiness_pct,forecast_avg_wind_speed_mps,most_common_description
+"Tulum, Mexico",2026-06-24,31.93,28.822499999999998,72.75,99.0,2.665,overcast clouds
+"Tulum, Mexico",2026-06-25,31.51,27.535,76.375,86.5,2.27625,overcast clouds
+"Tulum, Mexico",2026-06-26,31.48,28.3,72.625,55.625,3.4,overcast clouds
+"Tulum, Mexico",2026-06-27,31.61,28.4525,75.5,2.25,3.3925,clear sky
+"Tulum, Mexico",2026-06-28,32.48,28.1675,76.25,4.0,2.65125,clear sky
+"Tulum, Mexico",2026-06-29,28.07,26.2275,86.5,1.5,2.1,clear sky
+"Bali, Indonesia",2026-06-24,21.24,20.655,98.75,82.5,0.695,light rain
+"Bali, Indonesia",2026-06-25,27.34,22.60125,88.125,66.75,1.275,light rain
+"Bali, Indonesia",2026-06-26,26.13,21.87625,87.5,87.625,1.53,light rain
+"Bali, Indonesia",2026-06-27,27.98,21.9075,85.75,80.5,1.295,light rain
+"Bali, Indonesia",2026-06-28,26.48,21.33125,86.375,71.625,1.9025,light rain
+"Bali, Indonesia",2026-06-29,26.57,23.87,63.75,63.5,2.46,broken clouds
+"Phuket, Thailand",2026-06-24,28.85,28.275000000000002,79.75,71.0,3.875,light rain
+"Phuket, Thailand",2026-06-25,30.61,28.3825,81.75,94.875,4.3575,moderate rain
+"Phuket, Thailand",2026-06-26,29.28,28.00625,77.0,76.75,4.16125,light rain
+"Phuket, Thailand",2026-06-27,28.61,27.7425,82.0,100.0,4.6625,moderate rain
+"Phuket, Thailand",2026-06-28,27.54,27.13125,83.375,100.0,4.8,moderate rain
+"Phuket, Thailand",2026-06-29,27.41,26.6325,87.75,100.0,7.085,heavy intensity rain
+"Zanzibar, Tanzania",2026-06-24,27.06,25.252499999999998,69.75,25.5,5.075,few clouds
+"Zanzibar, Tanzania",2026-06-25,27.1,24.46125,75.125,5.625,5.08125,clear sky
+"Zanzibar, Tanzania",2026-06-26,27.22,24.57,74.625,7.375,5.495,clear sky
+"Zanzibar, Tanzania",2026-06-27,27.3,24.275,78.0,15.25,4.88625,clear sky
+"Zanzibar, Tanzania",2026-06-28,27.36,24.48,79.375,30.0,4.1425,light rain
+"Zanzibar, Tanzania",2026-06-29,26.42,24.4,79.75,54.75,2.6375,light rain
+"Cartagena, Colombia",2026-06-24,30.61,27.7625,77.5,29.25,4.2325,scattered clouds
+"Cartagena, Colombia",2026-06-25,30.9,28.0,78.75,29.625,3.715,few clouds
+"Cartagena, Colombia",2026-06-26,30.49,28.01125,82.25,78.875,4.05125,light rain
+"Cartagena, Colombia",2026-06-27,30.93,28.12875,76.375,87.25,2.7875,overcast clouds
+"Cartagena, Colombia",2026-06-28,31.88,28.1425,76.375,75.625,4.39,overcast clouds
+"Cartagena, Colombia",2026-06-29,27.58,27.095,87.0,46.0,5.135,scattered clouds
+"Paris, France",2026-06-24,41.05,38.075,27.75,5.0,2.7775000000000003,clear sky
+"Paris, France",2026-06-25,40.65,34.04125,31.375,50.0,3.9924999999999997,scattered clouds
+"Paris, France",2026-06-26,39.98,33.445,33.875,47.0,2.14375,few clouds
+"Paris, France",2026-06-27,35.07,30.145,43.125,63.875,3.21,light rain
+"Paris, France",2026-06-28,33.98,27.165,44.75,46.625,2.7,few clouds
+"Paris, France",2026-06-29,22.47,19.62,58.25,67.25,3.34,broken clouds

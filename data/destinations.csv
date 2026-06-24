@@ -1,13 +1,7 @@
-city,country,region,lat,lon,avg_flight_gbp,iata
-Cancun,Mexico,Caribbean,21.1619,-86.8515,520,CUN
-Bali (Kuta),Indonesia,Southeast Asia,-8.7215,115.1686,680,DPS
-Phuket,Thailand,Southeast Asia,7.8804,98.3923,640,HKT
-Rio de Janeiro,Brazil,South America,-22.9068,-43.1729,710,GIG
-Punta Cana,Dominican Republic,Caribbean,18.5601,-68.3725,560,PUJ
-Havana,Cuba,Caribbean,23.1136,-82.3666,590,HAV
-Mombasa,Kenya,East Africa,-4.0435,39.6682,620,MBA
-Goa,India,South Asia,15.2993,74.1240,560,GOI
-Montego Bay,Jamaica,Caribbean,18.4762,-77.8939,610,MBJ
-Boracay (Caticlan),Philippines,Southeast Asia,11.9674,121.9248,720,MPH
-Da Nang,Vietnam,Southeast Asia,16.0544,108.2022,690,DAD
-Cartagena,Colombia,South America,10.3910,-75.4794,650,CTG
+destination,formatted_address,country,latitude,longitude,place_id,current_temp_c,max_temp_c,humidity_pct,cloudiness_pct,wind_speed_mps,weather_description,weather_retrieved_at_utc,bars_count,hotels_count,nightclubs_count,restaurants_count,attractions_count,weather_score,nightlife_score,amenity_score,final_score
+"Phuket, Thailand","Phuket, Thailand",Thailand,7.9843109,98.3307468,ChIJT1JixOIxUDARIbo9BoWayuk,31.13,31.13,75,49,4.21,scattered clouds,2026-06-24T11:10:30,10,10,10,10,10,100,100,100,100.0
+"Cartagena, Colombia","Cartagena, Bolivar, Colombia",Colombia,10.3932277,-75.4832311,ChIJUROdrucl9o4RyiY_Ay45YbE,24.34,24.34,86,38,2.24,scattered clouds,2026-06-24T11:10:37,10,10,10,10,10,100,100,100,100.0
+"Paris, France","Paris, France",France,48.8575475,2.3513765,ChIJD7fiBh9u5kcRYJSMaMOCCwQ,39.48,40.0,31,7,0.52,clear sky,2026-06-24T11:10:39,10,10,10,10,10,85,100,100,94.0
+"Tulum, Mexico","Tulum, Quintana Roo, Mexico",Mexico,20.2114185,-87.46535019999999,ChIJSyrkEAPUT48Rt5r_k9vA7Q4,25.47,25.47,94,98,1.65,overcast clouds,2026-06-24T11:10:23,10,10,10,10,10,80,100,100,92.0
+"Bali, Indonesia","Bali, Indonesia",Indonesia,-8.4095178,115.188916,ChIJoQ8Q6NNB0S0RkOYkS7EPkSQ,21.58,21.58,96,95,0.6,overcast clouds,2026-06-24T11:10:26,10,10,8,10,10,50,100,100,80.0
+"Zanzibar, Tanzania","Unguja, Tanzania",Tanzania,-6.135729500000001,39.3621196,ChIJ5QkpKmApXRgRX32brUqvNaA,27.25,27.25,59,46,5.95,scattered clouds,2026-06-24T11:10:32,2,10,0,10,4,100,16,100,70.6
